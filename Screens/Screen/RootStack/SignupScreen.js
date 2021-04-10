@@ -9,7 +9,7 @@ import firebase from '../../../Apps/firebase'
 import "firebase/auth"
 
 
-class Supscreen extends Component {
+class SignupScreen extends Component {
     constructor(props) {
         super(props)
         // this.validate=this.validate.bind(this);
@@ -176,7 +176,7 @@ class Supscreen extends Component {
                                 </LinearGradient>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                onPress={() => { this.props.navigation.navigate('Signinscreen') }}
+                                onPress={() => { this.props.navigation.navigate('SigninScreen') }}
                                 style={[styles.signin, {
                                     borderColor: '#009387',
                                     borderWidth: 1,
@@ -195,7 +195,7 @@ class Supscreen extends Component {
     }
 }
 
-export default Supscreen
+export default SignupScreen
 
 const styles = StyleSheet.create({
     container: {

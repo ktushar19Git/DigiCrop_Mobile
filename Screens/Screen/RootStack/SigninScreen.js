@@ -10,7 +10,7 @@ import "firebase/auth"
 import Maintabscreen from '../../../Screens/Screen/Maintabscreen';
 
 
-class Signinscreen extends Component {
+class SigninScreen extends Component {
     constructor(props) {
         super(props)
         // this.validate=this.validate.bind(this);
@@ -225,7 +225,7 @@ class Signinscreen extends Component {
                                 <Text style={[styles.textsign, {
                                     color: '#009387',
                                     textAlign:'center'
-                                }]} onPress={()=>this.props.navigation.navigate('Signupscreen')}>Sign up</Text>
+                                }]} onPress={()=>this.props.navigation.navigate('SignupScreen')}>Sign up</Text>
                             </TouchableOpacity>
 
                            
@@ -237,7 +237,7 @@ class Signinscreen extends Component {
     }
 }
 
-export default Signinscreen;
+export default SigninScreen;
 
 const styles = StyleSheet.create({
     container: {
