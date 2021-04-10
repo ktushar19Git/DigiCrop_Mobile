@@ -71,9 +71,7 @@ export default class Regform extends React. Component {
       onChangeText={(text)=>{this.setState({name:text})}}
       underlineColorAndroid={'transparent'} />
        <Text style={{color:'red'}}>{this.state.nameError}</Text>
-       <Picker style={{width:'100%'}}>
-         <Picker.item label="spanish" value="spanish" />
-       </Picker>
+      
 
       <TextInput style={styles.textinput} placeholder="your email"
       onBlur={()=>this.emailValidator()}

@@ -1,5 +1,6 @@
 import React from 'react'
-import { View,TextInput,StyleSheet,TouchableOpacity,Text} from 'react-native';
+import { View,TextInput,StyleSheet,TouchableOpacity,Text,Button} from 'react-native';
+import SignupScreen from '../Screens/Screen/RootStack/SignupScreen';
 
 
 import  firebase from '../Apps/firebase';
@@ -20,11 +21,22 @@ export default class Sign extends React.Component{
         alert("user added");
     }
 
+    forgotPassword=()=>
+    {
+        var auth=firebase.auth();
+        var emailAddr=(this.state.email)
+        auth.sendPasswordResetEmail(emailAddr).then(function(){
+            alert("email link sent ")
+        })
+    }
+
 
 
     render(){
         return(
             <View style={styles.container}>
+
+        
                 <TextInput
                 style={styles.inputBox}
                 value={this.state.name}
@@ -51,7 +63,12 @@ export default class Sign extends React.Component{
 
                 <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
                     <Text style={styles.buttonText}>Signup</Text>
+                    <Button title="Signup" onPress={()=>this.props.navigation.navigate('SignupScreen')}/>
+                    
                 </TouchableOpacity>
+                <View>
+                    <Text onPress={this.forgotPassword()}>Forgot Password?</Text>
+                </View>
             </View>
         )
     }
@@ -90,6 +107,7 @@ const styles=StyleSheet.create({
     },
     buttonSignup:{
         fontSize:12
-    }
+    },
+   
 })
 

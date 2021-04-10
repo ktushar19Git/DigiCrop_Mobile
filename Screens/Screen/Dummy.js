@@ -145,3 +145,62 @@ return(
               }
 
               else{
+
+
+<NavigationContainer>
+<Drawer.Navigator>
+<Drawer.Screen name="Maintabscreen"  children={Maintabscreen} />
+<Drawer.Screen name="Favorites" component={FavoritesScreen} />
+<Drawer.Screen name="Contacts" component={ContactsScreen} />
+
+<Drawer.Screen name="Register" component={Regform} />
+</Drawer.Navigator>
+</NavigationContainer>
+
+
+<DataTable  >
+                                <Text style={styles.Exist}>Existing</Text>
+                            
+                             <DataTable.Row>
+                                 <DataTable.Cell alignItems="left">PlotNo</DataTable.Cell>
+                                 <DataTable.Cell alignItems="left">Date/Time</DataTable.Cell>
+                                 <DataTable.Cell alignItems="left">SoilMoisture</DataTable.Cell>
+                                 <DataTable.Cell alignItems="left">SoilTemperature</DataTable.Cell>
+                                 <DataTable.Cell alignItems="left">SoilPH</DataTable.Cell>
+                                 <DataTable.Cell alignItems="left">SunLight</DataTable.Cell>
+                                 <DataTable.Cell alignItems="left">EnvTemp</DataTable.Cell>
+                                
+                            
+                             </DataTable.Row>
+                             
+
+                             <DataTable.Row>
+                                 {
+                                     this.state.InputData && 
+                                     this.state.InputData.map(InputData=>{
+                                         return(
+                                         <View>
+                                         <DataTable.Row key={InputData.name}>
+                                         <DataTable.Cell   align="left" >{InputData.PlotNo}</DataTable.Cell>
+                                         <DataTable.Cell  align="left" >{InputData.posted_datetime}</DataTable.Cell>
+                                        <DataTable.Cell  align="left">{this.fnFetchSoilMoisture(InputData.SoilMoisture)}</DataTable.Cell>
+                                        <DataTable.Cell  align="left">{InputData.SoilTemperature}</DataTable.Cell>
+                                        <DataTable.Cell  align="left">{InputData.SoilpH}</DataTable.Cell>
+                                        <DataTable.Cell  align="left">{this.fnFetchSunLight(InputData.SunLight)}</DataTable.Cell>
+                                        <DataTable.Cell  align="left">{InputData.EnvTemp}</DataTable.Cell>
+                                        </DataTable.Row>
+                                        </View>
+                                        
+                                         )
+                                     })
+                                 }
+
+                             </DataTable.Row>
+                             </DataTable>
+                            
+                            
+                             
+                            
+                                                        
+                                 
+                              

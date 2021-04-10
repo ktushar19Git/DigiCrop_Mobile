@@ -12,6 +12,7 @@ import { createMaterialBottomTabNavigator} from '@react-navigation/material-bott
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import TabScreen5 from '../Tabs/TabScreen5';
 import ContactsScreen from '../../Screens/Drawer/ContactsScreen';
+import Submitdata from '../../Screens/Screen/RootStack/Submitdata';
 
 
 const HomeStack = createStackNavigator();
@@ -33,7 +34,7 @@ const Maintabscreen = () => (
 
    <Tab.Screen
    name="Home"
-   component={HomeStackScreen}
+   component={Submitdata}
    options={{
        tabBarLabel:'Home',
        tabBarColor:"#009387",
@@ -105,7 +106,7 @@ const HomeStackScreen = ({navigation}) => (
             fontWeight:'bold'
         }
     }}>
-        <HomeStack.Screen name="Home" component={HomeScreen} options={{
+        <HomeStack.Screen name="Submitdata" component={Submitdata} options={{
             title:'Overview',
             headerLeft: () => (
                 <Icon.Button name="ios-menu" size={25} backgroundColor='#009387' />
@@ -138,7 +139,7 @@ const DetailsStackScreen = ({navigation}) =>(
 const AboutStackScreen = ({navigation}) =>(
     <AboutStack.Navigator screenOptions={{
         headerStyle:{
-            backgroundColor:'skyblue'
+            backgroundColor:'#009387'
         },
         headerTintColor:'#fff',
         headerTitleStyle:{
@@ -159,9 +160,9 @@ const AboutStackScreen = ({navigation}) =>(
 const ContactStackScreen = ({navigation}) =>(
     <ContactStack.Navigator screenOptions={{
         headerStyle:{
-            backgroundColor:'pink'
+            backgroundColor:'#009387'
         },
-        headerTintColor:'red',
+        headerTintColor:'#fff',
         headerTitleStyle:{
             fontWeight:'bold'
         }
@@ -169,7 +170,7 @@ const ContactStackScreen = ({navigation}) =>(
         <ContactStack.Screen name="Contact" component={ContactsScreen} options={{
             title:'Contact',
             headerLeft:()=>(
-                <Icon.Button name="ios-call" size={25}  />
+                <Icon.Button name="ios-call" size={25} backgroundColor='#009387' />
             )
            
         }} />

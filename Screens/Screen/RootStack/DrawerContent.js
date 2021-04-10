@@ -19,7 +19,7 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { AuthContext } from '../../../Apps/components/Context';
+//import { AuthContext } from '../../../Apps/components/Context';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function DrawerContent(props){
@@ -65,7 +65,7 @@ export default function DrawerContent(props){
                 size={size} />
             )}
             label="Home"
-            onPress={()=>{props.navigation.navigate('HomeScreen')}} />
+            onPress={()=>{props.navigation.navigate('Maintabscreen')}} />
 
            <DrawerItem
             icon={({color,size})=>(
@@ -75,6 +75,8 @@ export default function DrawerContent(props){
                 size={size} />
             )}
             label="Bookmarks"
+           
+
             onPress={()=>{props.navigation.navigate('FavoritesScreen')}} />
 
           <DrawerItem

@@ -11,7 +11,7 @@ Picker,
  import firebase from '../../../Apps/firebase';
  import DatePicker from "react-native-datepicker";
  import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
- import {Paper} from "react-native-paper";
+ import {DarkTheme, DefaultTheme, Provider as PaperProvider} from "react-native-paper";
  import { DataTable} from 'react-native-paper';
 
 export default class Submitdata extends React. Component {
@@ -19,6 +19,8 @@ export default class Submitdata extends React. Component {
          super(props);
          this.fnSubmit = this.fnSubmit.bind(this);
          this.fnFetchSunLight=this.fnFetchSunLight.bind(this);
+         this.fnFetchSoilMoisture=this.fnFetchSoilMoisture.bind(this);
+         //this.fnFetchData=this.fnFetchData.bind(this);
         
          this.state={
             SoilMoisture :"",
@@ -28,12 +30,15 @@ export default class Submitdata extends React. Component {
             EnvTemp:"",
             PlotNo:"",
             posted_datetime:"",
-            inputdata: []
+            InputData: []
 
          }
+         //this.fnFetchData();
 
         
      }
+
+     
 
      fnFetchSunLight(e)
      {
@@ -76,6 +81,35 @@ export default class Submitdata extends React. Component {
          }
          return localSunLight;
      }
+
+
+     fnFetchSoilMoisture(e)
+     {
+         let localSoilMosture = "";        
+         if(e == 1)
+         {
+             localSoilMosture = "Dry";
+         }
+         else if(e == 2)
+         {
+             localSoilMosture = "Dry+";
+         }
+         else if(e == 3)
+         {
+             localSoilMosture = "Nor";
+         }
+         else if(e == 4)
+         {
+             localSoilMosture = "Wet";
+         }
+         else if(e == 5)
+         {
+             localSoilMosture = "Wet+";
+         }
+         return localSoilMosture;
+     }
+
+
          
      
           fnSubmit() {
@@ -144,9 +178,9 @@ export default class Submitdata extends React. Component {
                     posted_datetime: this.state.posted_datetime,
                    
                 })
-                this.fnFetchSunLight();
-
+                
                 alert("Record Added Successfully");
+                //this.fnFetchData();
                 
                 }
             }
@@ -157,7 +191,9 @@ export default class Submitdata extends React. Component {
     return (
       <View style={styles.Submit}>
          <Text style={styles.header}>Measurement Parameters</Text>
-        <Picker style={styles.textinput}
+         <View style={styles.textInput}>
+        <Picker 
+        name="PlotNo"
         selectedValue ={this.state.PlotNo}  onValueChange={PlotNo=>this.setState({PlotNo})} >
             <Picker.Item label="Plot No"  value=""  />
            <Picker.Item  label="1" value="1"  />
@@ -166,42 +202,53 @@ export default class Submitdata extends React. Component {
            <Picker.Item  label="4" value="4"  />
            <Picker.Item  label="5" value="5"  />
        </Picker>
+       </View>
 
          <TextInput  style={styles.textinput}  placeholder="Posted Date & Time 1609067368835"
-        selectedValue={this.state.posted_datetime} 
-         onValueChange={(posted_datetime)=>this.setState({posted_datetime})}/>
+         name="posted_datetime"
+        value={this.state.posted_datetime} 
+         onChangeText={posted_datetime=>this.setState({posted_datetime})}/>
 
-       <Picker style={styles.textinput} placeholder="SoilMoisture"
+       <View style={styles.textInput}>
+       <Picker  
+       name="SoilMoisture"
          selectedValue={this.state.SoilMoisture} onValueChange={SoilMoisture=>this.setState({SoilMoisture})} >
-           
-           <Picker.Item  label="Dry" value="Dry"  />
-           <Picker.Item  label="Dry+" value="Dry+"  />
-           <Picker.Item  label="Nor" value="Nor"  />
-           <Picker.Item  label="Wet" value="Wet"  />
-           <Picker.Item  label="Wet+" value="Wet+"  />
+            <Picker.Item label="SoilMoisture" value="" />
+           <Picker.Item  label="Dry" value={1}  />
+           <Picker.Item  label="Dry+" value={2} />
+           <Picker.Item  label="Nor" value={3} />
+           <Picker.Item  label="Wet" value={4}  />
+           <Picker.Item  label="Wet+" value={5}  />
        </Picker>
+       </View>
 
        <TextInput  style={styles.textinput} placeholder="Soil Temperture(-9-50^0 c)"
+       name="SoilTemperture"
          value={this.state.SoilTemperature}  onChangeText={SoilTemperature=>this.setState({SoilTemperature})}/>
        
         <TextInput  style={styles.textinput} placeholder="Soil pH(3.5-9)"
+        name="SoilpH"
          value={this.state.SoilpH}  onChangeText={SoilpH=>this.setState({SoilpH})}/>
 
-         <Picker style={styles.textinput} 
+         <View style={styles.textInput} >
+         <Picker 
+         label="SunLight"
           selectedValue={this.state.SunLight}  onValueChange={SunLight=>this.setState({SunLight})}>
-           <Picker.Item label="SunLight" value="" />
-           <Picker.Item  label="Low-" value="1"  />
-           <Picker.Item  label="Low" value="2"  />
-           <Picker.Item  label="Low+" value="3"  />
-           <Picker.Item  label="Nor-" value="4"  />
-           <Picker.Item  label="Nor" value="5"  />
-           <Picker.Item  label="Nor+" value="6"  />
-           <Picker.Item  label="High-" value="7"  />
-           <Picker.Item  label="High" value="8"  />
-           <Picker.Item  label="High+" value="9"  />
+          
+           <Picker.Item  label="Low-" value={1}  />
+           <Picker.Item  label="Low" value={2}  />
+           <Picker.Item  label="Low+" value={3} />
+           <Picker.Item  label="Nor-" value={4}  />
+           <Picker.Item  label="Nor" value={5} />
+           <Picker.Item  label="Nor+" value={6}  />
+           <Picker.Item  label="High-" value={7}  />
+           <Picker.Item  label="High" value={8} />
+           <Picker.Item  label="High+" value={9}  />
        </Picker>
+       </View>
        
         <TextInput  style={styles.textinput} placeholder="Envorimental Temperature(-9-50)"
+        name="EnvTemp"
          value={this.state.EnvTemp}  onChangeText={EnvTemp=>this.setState({EnvTemp})}/>
        
                     <View>
@@ -227,24 +274,8 @@ export default class Submitdata extends React. Component {
                           <View>
                              
                             
-                           
-                             <DataTable  >
-                                <Text style={styles.Exist}>Existing</Text>
-                            
-                             <DataTable.Row>
-                                 <DataTable.Cell alignItems="left">PlotNo</DataTable.Cell>
-                                 <DataTable.Cell alignItems="left">Date/Time</DataTable.Cell>
-                                 <DataTable.Cell alignItems="left">SoilMoisture</DataTable.Cell>
-                                 <DataTable.Cell alignItems="left">SoilTemperature</DataTable.Cell>
-                                 <DataTable.Cell alignItems="left">SoilPH</DataTable.Cell>
-                                 <DataTable.Cell alignItems="left">SunLight</DataTable.Cell>
-                                 <DataTable.Cell alignItems="left">EnvTemp</DataTable.Cell>
-                                
-                             </DataTable.Row>
-                             </DataTable>
-                            
+                          
                              
-                            
                                                         
                                  
                               
@@ -271,6 +302,9 @@ export default class Submitdata extends React. Component {
      backgroundColor: '#1520A6',
      //backgroundColor:'pink',
      padding:20,
+      //marginTop:5,
+      margin:0
+     
      
     },
     header:{
@@ -278,7 +312,7 @@ export default class Submitdata extends React. Component {
         color:'#3aff2e',
         
        // paddingBottom:10,
-        marginBottom: 20,
+        marginBottom: 25,
         borderBottomColor:'#fff',
         borderBottomWidth: 2,
         marginLeft:10,
@@ -287,13 +321,29 @@ export default class Submitdata extends React. Component {
     textinput: {
         alignSelf: 'stretch',
         height:40,
-        marginBottom:10,
+        marginBottom:20,
         color: 'black',
         borderColor: '#fff',
         borderWidth:1,
         padding:6,
         margin:10,
-        backgroundColor:"white",
+        backgroundColor:'white',
+        fontWeight:"bold",
+        marginEnd:10,
+        marginLeft:10,
+  
+    },
+
+    textInput: {
+        alignSelf: 'stretch',
+        height:40,
+        marginBottom:25,
+        color: 'black',
+        borderColor: '#fff',
+        borderWidth:1,
+        
+        margin:10,
+        backgroundColor:'white',
         fontWeight:"bold",
         marginEnd:10,
         marginLeft:10,
@@ -309,6 +359,7 @@ export default class Submitdata extends React. Component {
         marginTop: 30,
         marginLeft:10,
         marginEnd:10,
+        marginBottom:30
     },
     btntxt:
     {
