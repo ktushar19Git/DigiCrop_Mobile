@@ -5,24 +5,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import TabScreen1 from './TabScreen1';
+import Submitdata  from '../../Screens/Screen/RootStack/Submitdata';
 
 const MaterialTopTabs=createMaterialTopTabNavigator();
 
 
-function TabScreen1() {
-    return(
-        <View  style={{ flex:1, alignItems:'center', justifyContent:'center',backgroundColor:"red" }}>
-        <Text style={{ fontWeight:"bold",color:"green"}}>Tab 1</Text>
-       
-       
-      </View>
-    );
-    
-  }
+
   function TabScreen2() {
     return(
         <View style={{ flex:1,alignItems:'center', backgroundColor:"pink" }}>
-        <Text style={{ fontWeight:"bold",color:"red"}}>Tab 2</Text>
+        <Text style={{ fontWeight:"bold",color:"red"}}>TAB 2</Text>
        
        
       </View>
@@ -41,13 +34,13 @@ function TabScreen1() {
 function TabScreen5() {
     
     return(
-        <NavigationContainer>
+        
             <MaterialTopTabs.Navigator>
-            <MaterialTopTabs.Screen name="Tab 1" component={TabScreen1}/>
-            <MaterialTopTabs.Screen name="Tab 2" component={TabScreen2}/>
-            <MaterialTopTabs.Screen name="Tab 3" component={TabScreen3}/>
+            <MaterialTopTabs.Screen name="Update Personal Details" component={TabScreen1}/>
+            <MaterialTopTabs.Screen name="SUBMITDATA" component={Submitdata}/>
+           
            </MaterialTopTabs.Navigator>
-         </NavigationContainer>
+         
     
     );
     

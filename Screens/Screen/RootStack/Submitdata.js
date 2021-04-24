@@ -7,12 +7,14 @@ import {
 TouchableOpacity,
 Button,
 Picker,
+
  } from 'react-native';
  import firebase from '../../../Apps/firebase';
- import DatePicker from "react-native-datepicker";
+ //import DatePicker from "react-native-datepicker";
  import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
  import {DarkTheme, DefaultTheme, Provider as PaperProvider} from "react-native-paper";
  import { DataTable} from 'react-native-paper';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default class Submitdata extends React. Component {
      constructor(props){
@@ -20,7 +22,8 @@ export default class Submitdata extends React. Component {
          this.fnSubmit = this.fnSubmit.bind(this);
          this.fnFetchSunLight=this.fnFetchSunLight.bind(this);
          this.fnFetchSoilMoisture=this.fnFetchSoilMoisture.bind(this);
-         //this.fnFetchData=this.fnFetchData.bind(this);
+         this.fnFetchData=this.fnFetchData.bind(this);
+         
         
          this.state={
             SoilMoisture :"",
@@ -33,7 +36,7 @@ export default class Submitdata extends React. Component {
             InputData: []
 
          }
-         //this.fnFetchData();
+        this.fnFetchData(); 
 
         
      }
@@ -110,6 +113,24 @@ export default class Submitdata extends React. Component {
      }
 
 
+     fnFetchData() {
+        //db.collection('InputData').doc(uid).get()
+        const db = firebase.firestore();
+
+        db.collection("InputData").where("uid", "==",(firebase.auth().currentUser.uid)).get()
+          .then(querySnapshot => {
+              console.log(querySnapshot.docs);
+            const InputData = []
+            querySnapshot.forEach(doc => {
+              const data = doc.data()
+              InputData.push(data)
+            });
+            this.setState({InputData: InputData})
+            
+          });
+      }
+
+
          
      
           fnSubmit() {
@@ -165,6 +186,10 @@ export default class Submitdata extends React. Component {
             if (strErr != "") {
                 alert(strErr);
             }
+            
+           
+            
+
             else{
             
                 const db = firebase.firestore();
@@ -176,20 +201,22 @@ export default class Submitdata extends React. Component {
                     SunLight: this.state.SunLight,
                     EnvTemp: this.state.EnvTemp,
                     posted_datetime: this.state.posted_datetime,
+                    uid:(firebase.auth().currentUser.uid)
+                    
                    
                 })
                 
                 alert("Record Added Successfully");
-                //this.fnFetchData();
+                this.fnFetchData();
                 
                 }
-            }
-            
-            
-            
+          }
+
+           
     render(){
     return (
       <View style={styles.Submit}>
+          <ScrollView>
          <Text style={styles.header}>Measurement Parameters</Text>
          <View style={styles.textInput}>
         <Picker 
@@ -232,9 +259,9 @@ export default class Submitdata extends React. Component {
 
          <View style={styles.textInput} >
          <Picker 
-         label="SunLight"
+         
           selectedValue={this.state.SunLight}  onValueChange={SunLight=>this.setState({SunLight})}>
-          
+            <Picker.Item label="SunLight"  value=""  />
            <Picker.Item  label="Low-" value={1}  />
            <Picker.Item  label="Low" value={2}  />
            <Picker.Item  label="Low+" value={3} />
@@ -271,28 +298,53 @@ export default class Submitdata extends React. Component {
                          </Text>
                           </TouchableOpacity>
                           </View>
-                          <View>
+                          <View style={styles.table}>
+                         
                              
-                            
-                          
-                             
-                                                        
+                                 <DataTable>
+                                 <Text style={styles.Exist}>Existing</Text>
                                  
-                              
-                          </View>
+                                 <DataTable.Row>
+                                 <DataTable.Cell alignItems="left">PlotNo</DataTable.Cell>
+                                 <DataTable.Cell alignItems="left">Date/Time</DataTable.Cell>
+                                 <DataTable.Cell alignItems="left">SoilMoisture</DataTable.Cell>
+                                 <DataTable.Cell alignItems="left">SoilTemperature</DataTable.Cell>
+                                 <DataTable.Cell alignItems="left">SoilPH</DataTable.Cell>
+                                 <DataTable.Cell alignItems="left">SunLight</DataTable.Cell>
+                                 <DataTable.Cell alignItems="left">EnvTemp</DataTable.Cell>
+                                
+                            
+                             </DataTable.Row>
+                                 {
+                                     this.state.InputData &&this.state.InputData.map(InputData=>{
+                                         return(
+                                                                            
+                            
+                             <DataTable.Row>
+                                <DataTable.Cell alignItems="left">{InputData.PlotNo}</DataTable.Cell>
+                                 <DataTable.Cell alignItems="left">{InputData.posted_datetime}</DataTable.Cell>
+                                 <DataTable.Cell  align="left">{InputData.SoilMoisture}</DataTable.Cell>
+                                 <DataTable.Cell  align="left">{InputData.SoilTemperature}</DataTable.Cell>
+                                 <DataTable.Cell  align="left">{InputData.SoilpH}</DataTable.Cell>
+                                 <DataTable.Cell  align="left">{InputData.SunLight}</DataTable.Cell>
+                                 <DataTable.Cell  align="left">{InputData.EnvTemp}</DataTable.Cell>
+                                
+                            
+                             </DataTable.Row>
+                                         )}
+                                     )}
+                             </DataTable>
+                                               
+                                             
+                         </View>
+                         </ScrollView>
                           </View>
                         
                           
                           
-                              
-                                  
-                                      
-                                  
-                              
-                          
-                         
-    
-    );
+     );
+
+     
   }
 }
   
@@ -300,9 +352,11 @@ export default class Submitdata extends React. Component {
     Submit: {
      
      backgroundColor: '#1520A6',
-     //backgroundColor:'pink',
+    // backgroundColor:'pink',
+    
      padding:20,
-      //marginTop:5,
+    //marginTop:5,
+
       margin:0
      
      
@@ -311,7 +365,7 @@ export default class Submitdata extends React. Component {
         fontSize:26,
         color:'#3aff2e',
         
-       // paddingBottom:10,
+        paddingBottom:10,
         marginBottom: 25,
         borderBottomColor:'#fff',
         borderBottomWidth: 2,
@@ -376,10 +430,11 @@ export default class Submitdata extends React. Component {
         fontSize:20,
     },
     table:{
-        marginTop:30,
-        backgroundColor:'yellow',
-        width:50,
-        height:30,
+        
+       //
+        backgroundColor:'#009387',
+        margin:0
+        
     }
   
   

@@ -14,6 +14,7 @@ import {createStackNavigator}  from '@react-navigation/stack';
 import Maintabscreen from './Screens/Screen/Maintabscreen';
 import { NavigationContainer } from '@react-navigation/native';
 
+
 //import Sign from './Screens/Sign';
 
 
@@ -30,14 +31,9 @@ export default function App(){
 
     
      <View style={styles.container}>
-     <RootStackScreen/>
-
+    <RootStackScreen />
     
         
-        
-    
-     
-      
      </View>
     
         

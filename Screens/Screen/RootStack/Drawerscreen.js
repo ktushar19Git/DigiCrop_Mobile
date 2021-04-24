@@ -10,6 +10,9 @@ import Maintabscreen from '../Maintabscreen';
 import DetailsScreen from '../DetailsScreen';
 import AboutScreen from '../AboutScreen';
 
+import PersonalDetails from '../../../Screens/Screen/PersonalDetailsScreen';
+import TabScreen5 from '../../Tabs/TabScreen5';
+
 
 const Drawer= createDrawerNavigator();
 
@@ -19,6 +22,9 @@ const Drawerscreen=({ navigation}) =>(
      <Drawer.Screen name="Home"  children={Maintabscreen} />
      <Drawer.Screen name="Details" component={DetailsScreen} />
      <Drawer.Screen name="About"  component={AboutScreen}  />
+    
+     <Drawer.Screen  name="Tab"  component={TabScreen5} />
+     
      
     </Drawer.Navigator>
    

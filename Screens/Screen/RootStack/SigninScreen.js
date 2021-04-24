@@ -7,6 +7,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import React, { Component } from 'react'
 import firebase from '../../../Apps/firebase'
 import "firebase/auth"
+//import "firebase/Storage"
 import Maintabscreen from '../../../Screens/Screen/Maintabscreen';
 
 
@@ -52,14 +53,15 @@ class SigninScreen extends Component {
                  // Signed in 
                  // ...
                  
-                 //alert(firebase.auth().currentUser.uid);
-                 
+                // alert(firebase.auth().currentUser.uid);
+                // localStorage.setItem("g_user_id", firebase.auth().currentUser.uid);
                 
                  //history.push("/SubmitData");
                 
                 
                 // alert("You are logged in. Please Click on SubmitData to proceed.");
                 alert("you are logged in successfully");
+               
                 this.props.navigation.navigate('Drawerscreen');
                
  
@@ -218,7 +220,7 @@ class SigninScreen extends Component {
                             <TouchableOpacity
                                 onPress={() => { this.props.navigation.goBack() }}
                                 style={[styles.signin, {
-                                    borderColor: '#009387',
+                                    borderColor: '#009387', 
                                     borderWidth: 1,
                                     marginTop: 15
                                 }]}>

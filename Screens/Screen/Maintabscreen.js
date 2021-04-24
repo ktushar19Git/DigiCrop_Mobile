@@ -15,6 +15,9 @@ import ContactsScreen from '../../Screens/Drawer/ContactsScreen';
 import Submitdata from '../../Screens/Screen/RootStack/Submitdata';
 
 
+
+
+
 const HomeStack = createStackNavigator();
 const DetailsStack=createStackNavigator();
 const AboutStack=createStackNavigator();
@@ -34,7 +37,7 @@ const Maintabscreen = () => (
 
    <Tab.Screen
    name="Home"
-   component={Submitdata}
+   component={HomeScreen}
    options={{
        tabBarLabel:'Home',
        tabBarColor:"#009387",
@@ -61,8 +64,8 @@ const Maintabscreen = () => (
    />
 
 <Tab.Screen
-   name="About"
-   component={AboutStackScreen}
+   name="TabScreen5"
+   component={TabScreen5}
    options={{
        tabBarLabel:'About',
        tabBarColor:"#ADD8E6",
@@ -106,9 +109,10 @@ const HomeStackScreen = ({navigation}) => (
             fontWeight:'bold'
         }
     }}>
-        <HomeStack.Screen name="Submitdata" component={Submitdata} options={{
+        <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{
             title:'Overview',
             headerLeft: () => (
+                
                 <Icon.Button name="ios-menu" size={25} backgroundColor='#009387' />
             )
            
@@ -123,6 +127,7 @@ const DetailsStackScreen = ({navigation}) =>(
         },
         headerTintColor:'blue',
         headerTitleStyle:{
+            
             fontWeight:'bold'
         }
     }}>
@@ -136,8 +141,8 @@ const DetailsStackScreen = ({navigation}) =>(
     </DetailsStack.Navigator>
 );
 
-const AboutStackScreen = ({navigation}) =>(
-    <AboutStack.Navigator screenOptions={{
+const Tab5StackScreen = ({navigation}) =>(
+    <Tab5Stack.Navigator screenOptions={{
         headerStyle:{
             backgroundColor:'#009387'
         },
@@ -146,14 +151,14 @@ const AboutStackScreen = ({navigation}) =>(
             fontWeight:'bold'
         }
     }}>
-        <AboutStack.Screen name="About" component={AboutScreen} options={{
+        <Tab5Stack.Screen name="Tab5" component={TabScreen5} options={{
             title:'About',
             headerLeft:()=>(
                 <Icon.Button name="ios-person" size={25} backgroundColor='#009387' />
             )
            
         }} />
-    </AboutStack.Navigator>
+    </Tab5Stack.Navigator>
 );
 
 
