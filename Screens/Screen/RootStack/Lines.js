@@ -2,12 +2,12 @@ import React from 'react';
 import {View,Text}  from 'react-native';
 import firebase from '../../../Apps/firebase';
 
-import {Line}  from 'react-chartjs-2';
+import {Line}  from 'react-native-chart-kit';
 
 
 
 
-export default class LineChart extends React.Component{
+ class Lines extends React.Component{
     constructor(props)
     {
         super(props);
@@ -33,7 +33,7 @@ export default class LineChart extends React.Component{
         console.log("FinalTempArray:"+TemperatureArray);
         
         this.data={
-           labels:['jan','Feb','Mar','Apr','May','jun','jul','Aug','Sep','Oct','Nov','Dec'],
+           labels:['Jan','Feb','Mar','Apr','May','jun','jul','Aug','Sep','Oct','Nov','Dec'],
            datasets:[
                {
                  label:'Temperture',
@@ -41,11 +41,16 @@ export default class LineChart extends React.Component{
                  data:TemperatureArray,
                  PointRadius:5,
                  borderWidth:2,
-                 borderColor:'green',
+                // borderColor:'green',
                  point:'rgba(200,122,20,1)',
-                 backgroundColor:'transparent',
+                // backgroundColor:'transparent',
 
                },
+
+              
+
+              
+            
 
             {
                 label:'Humidity',
@@ -53,10 +58,12 @@ export default class LineChart extends React.Component{
                 data:[12,15,18,22,24,10,12,15,18,22],
                 PointRadius:5,
                 borderWidth:2,
-                borderColor:'blue',
+               // borderColor:'blue',
                 point:'rgba(200,122,20,1)',
-                backgroundColor:'transparent'
+               // backgroundColor:'transparent'
             }
+
+           
 
 
             
@@ -70,14 +77,15 @@ export default class LineChart extends React.Component{
     
 fnFetchData(Month)
 {
+    
     const db = firebase.firestore();
     const InputData=[];
     db.collection("InputData").where("uid", "==",(firebase.auth().currentUser.uid)).get()
           .then(querySnapshot => {
               querySnapshot.forEach(doc=>{
-                  console.log("inputdata:"+doc);
+                  console.log("Inputdata:"+doc);
                   const data=doc.data()
-                  console.log("fnfetchdata:"+data);
+                  console.log("fnFetchdata:"+data);
                   InputData.push(data)
                   console.log("Firstloop-"+InputData);
               });
@@ -186,4 +194,7 @@ fnFetchData(Month)
             );
         }
     }
+
+    export default Lines;
+    
     

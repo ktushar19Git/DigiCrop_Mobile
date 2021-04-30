@@ -1,18 +1,19 @@
 import React from 'react';
 
 
-import { MaterialCommunityIcons} from 'react-native-vector-icons';
-import Homestack from './Homestack';
-import HomeScreen from './HomeScreen';
+
 import DetailsScreen from './DetailsScreen';
-import AboutScreen from './AboutScreen';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import { createStackNavigator} from '@react-navigation/stack';
 import { createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import TabScreen5 from '../Tabs/TabScreen5';
 import ContactsScreen from '../../Screens/Drawer/ContactsScreen';
-import Submitdata from '../../Screens/Screen/RootStack/Submitdata';
+import HomeScreen from '../../Screens/Screen/HomeScreen';
+
+
+//import Lines from '../../Screens/Screen/RootStack/Lines';
 
 
 
@@ -109,7 +110,7 @@ const HomeStackScreen = ({navigation}) => (
             fontWeight:'bold'
         }
     }}>
-        <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{
+        <HomeStack.Screen name="Home" component={HomeScreen} options={{
             title:'Overview',
             headerLeft: () => (
                 

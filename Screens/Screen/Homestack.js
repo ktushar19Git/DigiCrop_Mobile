@@ -32,7 +32,7 @@ const DetailsScreen=({navigation})=>{
 export default class Homestack extends Component {
   render(){
   return (
-    <NavigationContainer>
+    
       <Stack.Navigator > 
  
         <Stack.Screen name="Home" component={HomeScreen} 
@@ -55,16 +55,16 @@ export default class Homestack extends Component {
           ),
           headerRight:({navigation})=>{
             return (
-              <Button title="Login" color="black"
+              <Button title="Logout" color="black"
                 onPress={() => {alert('Details')}}
                 style={{ padding: 20 }} />
             );
           }
         }}/>
-        <Stack.Screen name="Details" component={DetailsScreen} />
+        
         
       </Stack.Navigator>
-    </NavigationContainer>
+  
   );
 }
 }
