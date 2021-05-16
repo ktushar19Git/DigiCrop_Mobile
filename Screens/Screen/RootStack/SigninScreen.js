@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Alert, StatusBar, TextInput, TouchableOpacity, Platform, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Alert, StatusBar, TextInput, TouchableOpacity, Platform, ScrollView,Button } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { LinearGradient } from 'expo-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -8,7 +8,9 @@ import React, { Component } from 'react'
 import firebase from '../../../Apps/firebase'
 import "firebase/auth"
 //import "firebase/Storage"
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import Maintabscreen from '../../../Screens/Screen/Maintabscreen';
+
 
 
 class SigninScreen extends Component {
@@ -17,6 +19,8 @@ class SigninScreen extends Component {
         // this.validate=this.validate.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this)
         this.fnForgotPassword=this.fnForgotPassword.bind(this)
+        AsyncStorage.setItem("login_email","")
+       
         this.state = {
             email: '',
             password: '',
@@ -27,6 +31,7 @@ class SigninScreen extends Component {
     }
 
     handleSubmit = () => {
+        AsyncStorage.setItem("login_email","")
         try
         {
             //alert(this.state.Email)
@@ -53,14 +58,28 @@ class SigninScreen extends Component {
                  // Signed in 
                  // ...
                  
-                // alert(firebase.auth().currentUser.uid);
-                // localStorage.setItem("g_user_id", firebase.auth().currentUser.uid);
+                // alert("firebase.auth().currentUser.uid");
                 
-                 //history.push("/SubmitData");
+                
+             //AsyncStorage.setItem("g_user_id",firebase.auth().currentUser.uid);
+            // AsyncStorage.setItem("login_email","welcome"+""+this.state.email)
+
+            
+               //history.push("/SubmitData");
                 
                 
                 // alert("You are logged in. Please Click on SubmitData to proceed.");
                 alert("you are logged in successfully");
+
+               // this.setState({userData:firebase.auth().currentUser && firebase.auth().currentUser.email})
+                
+               // alert(this.state.userData);
+               // alert(firebase.auth().currentUser&&firebase.auth().currentUser.email);
+                
+                  
+                  //alert(firebase.auth().currentUser.email);
+                
+                  
                
                 this.props.navigation.navigate('Drawerscreen');
                
@@ -151,16 +170,23 @@ class SigninScreen extends Component {
     }
 
 
+
+   
+
+
    
     
     render() {
+        
         return (
             <View style={styles.container}>
                 <StatusBar backgroundColor='#009387' barStyle="light-content" />
                 <View style={styles.header}>
                     <Text style={styles.text_header}>
                         WELCOME TO DIGICROP AGRICULTURE
-        </Text>
+                   </Text>
+        
+        
                 </View>
                 <Animatable.View
                     animation="fadeInUpBig"
@@ -227,10 +253,10 @@ class SigninScreen extends Component {
                                 <Text style={[styles.textsign, {
                                     color: '#009387',
                                     textAlign:'center'
-                                }]} onPress={()=>this.props.navigation.navigate('SignupScreen')}>Sign up</Text>
+                                }]} onPress={()=>{this.props.navigation.navigate('SignupScreen')}}>Sign up</Text>
                             </TouchableOpacity>
 
-                           
+                          
                         </View>
                     </ScrollView>
                 </Animatable.View>

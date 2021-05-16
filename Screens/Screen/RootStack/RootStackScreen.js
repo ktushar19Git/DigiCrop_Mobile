@@ -5,14 +5,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import SignupScreen from './SignupScreen';
 import SigninScreen from './SigninScreen';
 import Drawerscreen from './Drawerscreen';
-import TabScreen5  from '../../../Screens/Tabs/TabScreen5';
+//import TabScreen5  from '../../../Screens/Tabs/TabScreen5';
 
 
 
 const RootStack= createStackNavigator();
 
 const RootStackScreen=({ navigation}) =>(
-    <NavigationContainer>
+    <NavigationContainer >
     <RootStack.Navigator headerMode='none'>
      <RootStack.Screen name="SplashScreen"  component={SplashScreen} />
      <RootStack.Screen name="SigninScreen" component={SigninScreen} />

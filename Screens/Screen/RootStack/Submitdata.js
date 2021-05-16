@@ -8,13 +8,17 @@ TouchableOpacity,
 Button,
 Picker,
 
+
+
  } from 'react-native';
  import firebase from '../../../Apps/firebase';
  //import DatePicker from "react-native-datepicker";
  import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+ //import AsyncStorage from '@react-native-async-storage/async-storage';
  import {DarkTheme, DefaultTheme, Provider as PaperProvider} from "react-native-paper";
  import { DataTable} from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default class Submitdata extends React. Component {
      constructor(props){
@@ -33,6 +37,7 @@ export default class Submitdata extends React. Component {
             EnvTemp:"",
             PlotNo:"",
             posted_datetime:"",
+            email:"",
             InputData: []
 
          }
@@ -113,11 +118,13 @@ export default class Submitdata extends React. Component {
      }
 
 
-     fnFetchData() {
+     fnFetchData=()=>{
         //db.collection('InputData').doc(uid).get()
         const db = firebase.firestore();
+        
+        const userid= (firebase.auth().currentUser.uid)
 
-        db.collection("InputData").where("uid", "==",(firebase.auth().currentUser.uid)).get()
+        db.collection("InputData").where("uid", "==",userid).get()
           .then(querySnapshot => {
               console.log(querySnapshot.docs);
             const InputData = []
@@ -133,7 +140,7 @@ export default class Submitdata extends React. Component {
 
          
      
-          fnSubmit() {
+          fnSubmit=()=> {
 
             let strErr = "";
             if (this.state.SoilMoisture == "") {
@@ -191,7 +198,14 @@ export default class Submitdata extends React. Component {
             
 
             else{
-            
+                const userid=(firebase.auth().currentUser.uid)
+                try{
+                    if(userid==null){
+                        alert("you are not looged in")
+                    }
+                
+                
+            else{
                 const db = firebase.firestore();
                 db.collection("InputData").add({
                     PlotNo:this.state.PlotNo,
@@ -201,7 +215,9 @@ export default class Submitdata extends React. Component {
                     SunLight: this.state.SunLight,
                     EnvTemp: this.state.EnvTemp,
                     posted_datetime: this.state.posted_datetime,
-                    uid:(firebase.auth().currentUser.uid)
+                    uid:userid,
+                   // email: AsyncStorage.getItem("login_email")
+                    
                     
                    
                 })
@@ -211,6 +227,11 @@ export default class Submitdata extends React. Component {
                 
                 }
           }
+          catch(error){
+              alert(error.message);
+          }
+        }
+    }
 
            
     render(){
@@ -259,7 +280,7 @@ export default class Submitdata extends React. Component {
 
          <View style={styles.textInput} >
          <Picker 
-         
+         name="SunLight"
           selectedValue={this.state.SunLight}  onValueChange={SunLight=>this.setState({SunLight})}>
             <Picker.Item label="SunLight"  value=""  />
            <Picker.Item  label="Low-" value={1}  />
@@ -320,7 +341,7 @@ export default class Submitdata extends React. Component {
                                          return(
                                                                             
                             
-                             <DataTable.Row>
+                             <DataTable.Row key={InputData.name}>
                                 <DataTable.Cell alignItems="left">{InputData.PlotNo}</DataTable.Cell>
                                  <DataTable.Cell alignItems="left">{InputData.posted_datetime}</DataTable.Cell>
                                  <DataTable.Cell  align="left">{InputData.SoilMoisture}</DataTable.Cell>

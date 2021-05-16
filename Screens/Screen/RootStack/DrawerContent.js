@@ -1,5 +1,7 @@
-import React from 'react';
-import { View,StyleSheet} from 'react-native';
+import React,{useState,useEffect} from 'react';
+import { View,StyleSheet,Platform,Image,Button,TouchableOpacity
+
+} from 'react-native';
 import{
     useTheme,
     Avatar,
@@ -18,43 +20,89 @@ import {
 } from '@react-navigation/drawer';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Maintabscreen  from '../../../Screens/Screen/Maintabscreen';
+import * as ImagePicker from 'expo-image-picker';
+
+import { useNavigation}  from '@react-navigation/native';
 
 //import { AuthContext } from '../../../Apps/components/Context';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import firebase from '../../../Apps/firebase';
+
 
 export default function DrawerContent(props){
+    const[image,setImage]=useState(null);
+
+    useEffect(()=>{
+        (async()=>{
+            if(Platform.OS!=='web'){
+                const {status} =await ImagePicker.requestMediaLibraryPermissionsAsync();
+                if(status!=='granted'){
+                    alert('Sorry,we need camera roll permissions to make thiswork');
+                }
+                
+            }
+            
+        })();
+       
+    },[]);
+
+    const pickImage=async()=>{
+        let result=await ImagePicker.launchImageLibraryAsync({
+            mediaTypes:ImagePicker.MediaTypeOptions.All,
+            allowsEditing:true,
+            aspect:[4,3],
+            quality:1,
+        });
+        console.log(result);
+
+        if(!result.cancelled){
+            setImage(result.uri);
+        }
+        };
+
+
     const paperTheme = useTheme();
+    const[isDarkTheme,setIsDarkTheme]=React.useState(false);
+    const toggleTheme=()=>{
+        setIsDarkTheme(!isDarkTheme);
+
+
+
+    }
+
+   
+    const userid=(firebase.auth().currentUser.uid)
+   
+    const signOut=()=>{
+        alert("logged out successfully");
+        props.navigation.navigate('SigninScreen');
+    }
     //const {signOut, toggleTheme}=React.useContext(AuthContext);
 
     return(
         <SafeAreaProvider>
-        <View style={{flex:1,backgroundColor:'pink'}}>
+        <View style={{flex:1,backgroundColor:'white'}}>
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
                         <View style={{flexDirection:'row',marginTop:15}}>
-                            <Avatar.Image
-                            size={50}
-                            source={require('../../../assets/Logo.png')}/>
-                            <View style={{marginLeft:15,flexDirection:'column'}}>
+                           
+                            <TouchableOpacity onPress={pickImage}>
+                             <Image source={require('../../../assets/profile1.png')}
+                             style={{ width:60,height:60,borderRadius:30 }}   /> 
+                           </TouchableOpacity>
+                             
+                              {image  && <Image source={{uri:image}} style={{width:80,height:80,borderRadius:40}} />}
+
+                       
+                    
+                            <View style={{flexDirection:'column'}}>
                                 <Title style={styles.title}>Meghana Patan</Title>
-                                <Caption style={styles.Caption}>@Patan_Megha</Caption>
+                                <Caption style={styles.Caption}>{userid}</Caption>
                                 </View>
 
-                            
-                        </View>
-                        <View style={styles.row}>
-                        <View style={styles.section}>
-                            <Paragraph style={[styles.Paragraph,styles.Caption]}>80</Paragraph>
-                            <Caption style={styles.Caption}>Following</Caption>
-                        </View>
-                        <View style={styles.section}>
-                            <Paragraph style={[styles.Paragraph,styles.Caption]}>100k</Paragraph>
-                            <Caption style={styles.Caption}>Followers</Caption>
-                        
-                    
-                </View>
-            </View>
+             </View>
         </View>
         <Drawer.Section style={styles.drawerSection}>
             <DrawerItem
@@ -62,10 +110,12 @@ export default function DrawerContent(props){
                 <Icon
                 name="home-outline"
                 color={color}
-                size={size} />
+                size={size}
+                />
             )}
             label="Home"
-            onPress={()=>{props.navigation.navigate('Maintabscreen')}} />
+            
+            onPress={()=>{props.navigation.navigate('Home')}} />
 
            <DrawerItem
             icon={({color,size})=>(
@@ -77,7 +127,7 @@ export default function DrawerContent(props){
             label="Bookmarks"
            
 
-            onPress={()=>{props.navigation.navigate('FavoritesScreen')}} />
+            onPress={()=>{props.navigation.navigate('SettingsScreen')}} />
 
           <DrawerItem
             icon={({color,size})=>(
@@ -97,7 +147,7 @@ export default function DrawerContent(props){
                 size={size} />
             )}
             label="Profile"
-            onPress={()=>{props.navigation.navigate('ContactsScreen')}} />
+            onPress={()=>{props.navigation.navigate('ProfileScreen')}} />
 
           <DrawerItem
             icon={({color,size})=>(
@@ -107,7 +157,7 @@ export default function DrawerContent(props){
                 size={size} />
             )}
             label="Support"
-            onPress={()=>{props.navigation.navigate('AboutScreen')}} />
+            onPress={()=>{props.navigation.navigate('SettingsScreen')}} />
         </Drawer.Section>
 
         <Drawer.Section title="Preferences">
@@ -115,7 +165,7 @@ export default function DrawerContent(props){
             <View style={styles.preferences}>
                 <Text>Dark Theme</Text>
                 <View pointerEvents="none">
-                    <Switch value={paperTheme.dark}/>
+                    <Switch value={isDarkTheme}/>
                 </View>
             </View>
             </TouchableRipple>
@@ -146,9 +196,12 @@ const styles=StyleSheet.create({
     drawerContent:{
         flex:1,
         
+       
     },
     userInfoSection:{
         paddingLeft:20,
+
+        
     },
     title:{
         fontSize:16,
@@ -156,7 +209,7 @@ const styles=StyleSheet.create({
         fontWeight:'bold',
     },
     Caption:{
-        fontSize:14,
+        fontSize:12,
         lineHeight:14,
     },
     row:{
@@ -175,6 +228,7 @@ const styles=StyleSheet.create({
     },
     drawerSection:{
         marginTop:15,
+        
     },
     bottomDrawerSection:{
         marginBottom:15,

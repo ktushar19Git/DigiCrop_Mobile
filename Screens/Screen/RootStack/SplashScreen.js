@@ -22,7 +22,7 @@ function SplashScreen({navigation}) {
         <Animatable.View
          style={styles.footer}
           animation="fadeInUpBig">
-          <Text style={styles.title}>Stay connected with everyone</Text>
+          <Text style={styles.title}>Stay connected with Digicrop</Text>
           <Text style={styles.text}>Sign in with account</Text>
           <View style={styles.button}>
       <TouchableOpacity onPress={()=>navigation.navigate('SigninScreen')}>

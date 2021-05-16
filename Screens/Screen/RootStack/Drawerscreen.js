@@ -1,32 +1,37 @@
 import React from 'react';
 import { createDrawerNavigator} from '@react-navigation/drawer';
-
-
-
-
-import {DrawerNavigator}  from '@react-navigation/drawer';
-
 import Maintabscreen from '../Maintabscreen';
 import DetailsScreen from '../DetailsScreen';
 import AboutScreen from '../AboutScreen';
+//import Pic from '../../../Screens/Drawer/Pic';
 
-import PersonalDetails from '../../../Screens/Screen/PersonalDetailsScreen';
+
 import TabScreen5 from '../../Tabs/TabScreen5';
+import { DarkTheme, NavigationContainer } from '@react-navigation/native';
+import DrawerContent from '../../../Screens/Screen/RootStack/DrawerContent'
+import ProfileScreen from './ProfileScreen';
+import SettingsScreen from './SettingsScreen';
 
 
 const Drawer= createDrawerNavigator();
 
 const Drawerscreen=({ navigation}) =>(
-   
-    <Drawer.Navigator >
-     <Drawer.Screen name="Home"  children={Maintabscreen} />
-     <Drawer.Screen name="Details" component={DetailsScreen} />
-     <Drawer.Screen name="About"  component={AboutScreen}  />
     
-     <Drawer.Screen  name="Tab"  component={TabScreen5} />
+   
+        
+    <Drawer.Navigator drawerContent={props=><DrawerContent{...props}/>} theme={DarkTheme}>
+        
+     <Drawer.Screen name="HomeDrawer"  component={Maintabscreen} />
+     <Drawer.Screen name="ProfileScreen"  component={ProfileScreen}/>
+     <Drawer.Screen name="SettingsScreen"  component={SettingsScreen}/>
+    
+     
+    
+     
      
      
     </Drawer.Navigator>
+    
    
 );
 

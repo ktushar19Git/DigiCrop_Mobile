@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {Button}  from 'react-native';
 
 
 import DetailsScreen from './DetailsScreen';
@@ -11,7 +11,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import TabScreen5 from '../Tabs/TabScreen5';
 import ContactsScreen from '../../Screens/Drawer/ContactsScreen';
 import HomeScreen from '../../Screens/Screen/HomeScreen';
-
+import ProfileScreen  from '../../Screens/Screen/RootStack/ProfileScreen'
 
 //import Lines from '../../Screens/Screen/RootStack/Lines';
 
@@ -38,12 +38,12 @@ const Maintabscreen = () => (
 
    <Tab.Screen
    name="Home"
-   component={HomeScreen}
+   component={HomeStackScreen}
    options={{
        tabBarLabel:'Home',
        tabBarColor:"#009387",
        tabBarIcon:() =>(
-           <Icon name="ios-home" color="tomato" size={26} />
+           <Icon name="ios-home" color="white" size={26} />
        ),
        
 
@@ -55,9 +55,9 @@ const Maintabscreen = () => (
    component={DetailsStackScreen}
    options={{
        tabBarLabel:'Details',
-       tabBarColor:"#696969",
+       tabBarColor:"#009387",
        tabBarIcon:() =>(
-           <Icon name="ios-notifications" color="purple" size={26} />
+           <Icon name="ios-notifications" color="white" size={26} />
        ),
        
 
@@ -69,9 +69,9 @@ const Maintabscreen = () => (
    component={TabScreen5}
    options={{
        tabBarLabel:'About',
-       tabBarColor:"#ADD8E6",
+       tabBarColor:"#009387",
        tabBarIcon:() =>(
-           <Icon name="ios-person" color="green" size={26} />                                           
+           <Icon name="ios-person" color="white" size={26} />                                           
        ),
        
 
@@ -83,14 +83,17 @@ const Maintabscreen = () => (
    component={ContactStackScreen}
    options={{
        tabBarLabel:'contact',
-       tabBarColor:"#800080",
+       tabBarColor:"#009387",
        tabBarIcon:() =>(
-           <Icon name="ios-call" color="black" size={26} />
+           <Icon name="ios-call" color="white" size={26} />
        ),
        
 
    }}
    />
+
+
+
 
 
 
@@ -105,7 +108,7 @@ const HomeStackScreen = ({navigation}) => (
         headerStyle:{
             backgroundColor:'#009387'
         },
-        headerTintColor:'red',
+        headerTintColor:'white',
         headerTitleStyle:{
             fontWeight:'bold'
         }
@@ -114,19 +117,24 @@ const HomeStackScreen = ({navigation}) => (
             title:'Overview',
             headerLeft: () => (
                 
-                <Icon.Button name="ios-menu" size={25} backgroundColor='#009387' />
-            )
+                <Icon.Button name="ios-menu" size={25} backgroundColor='#009387'   />
+                
+            ),
+
+           
+            
            
         }} />
     </HomeStack.Navigator>
 );
+
 
 const DetailsStackScreen = ({navigation}) =>(
     <DetailsStack.Navigator screenOptions={{
         headerStyle:{
             backgroundColor:'#009387'
         },
-        headerTintColor:'blue',
+        headerTintColor:'white',
         headerTitleStyle:{
             
             fontWeight:'bold'
@@ -182,3 +190,5 @@ const ContactStackScreen = ({navigation}) =>(
         }} />
     </ContactStack.Navigator>
 );
+
+
