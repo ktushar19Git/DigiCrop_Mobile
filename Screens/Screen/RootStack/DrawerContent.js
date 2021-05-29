@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { View,StyleSheet,Platform,Image,Button,TouchableOpacity
+import { View,StyleSheet,Platform,Image,Button,TouchableOpacity,Alert
 
 } from 'react-native';
 import{
@@ -24,43 +24,15 @@ import Maintabscreen  from '../../../Screens/Screen/Maintabscreen';
 import * as ImagePicker from 'expo-image-picker';
 
 import { useNavigation}  from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 //import { AuthContext } from '../../../Apps/components/Context';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import firebase from '../../../Apps/firebase';
 
 
-export default function DrawerContent(props){
-    const[image,setImage]=useState(null);
-
-    useEffect(()=>{
-        (async()=>{
-            if(Platform.OS!=='web'){
-                const {status} =await ImagePicker.requestMediaLibraryPermissionsAsync();
-                if(status!=='granted'){
-                    alert('Sorry,we need camera roll permissions to make thiswork');
-                }
-                
-            }
-            
-        })();
-       
-    },[]);
-
-    const pickImage=async()=>{
-        let result=await ImagePicker.launchImageLibraryAsync({
-            mediaTypes:ImagePicker.MediaTypeOptions.All,
-            allowsEditing:true,
-            aspect:[4,3],
-            quality:1,
-        });
-        console.log(result);
-
-        if(!result.cancelled){
-            setImage(result.uri);
-        }
-        };
-
+ const DrawerContent=(props)=>{
+    //const[image,setImage]=useState(null);
 
     const paperTheme = useTheme();
     const[isDarkTheme,setIsDarkTheme]=React.useState(false);
@@ -70,9 +42,58 @@ export default function DrawerContent(props){
 
 
     }
+    const[item,setItem]=useState([])
+
+    useEffect(()=>{
+    
+         getdata();
+        
+     
+       },[]);
+       const getdata = async () => {
+         try{
+          await AsyncStorage.getItem("login_email").then(value=>{
+              if(value!==null){
+                  setItem(value);
+              }
+          })
+          
+          
+         }catch(error){
+             console.log(error)
+         }
+     }
+
+     const[userid,setuserid]=useState([])
 
    
-    const userid=(firebase.auth().currentUser.uid)
+       const Userdata = async () => {
+         try{
+          await AsyncStorage.removeItem("g_user_id").then(value=>{
+              alert('you are logged out');
+              props.navigation.navigate('SigninScreen');
+
+          })
+          
+          
+          
+         }catch(error){
+             console.log(error)
+         }
+     }
+   
+   
+
+
+    
+
+    
+
+
+   
+
+   
+    //const userid=(firebase.auth().currentUser.uid)
    
     const signOut=()=>{
         alert("logged out successfully");
@@ -81,29 +102,37 @@ export default function DrawerContent(props){
     //const {signOut, toggleTheme}=React.useContext(AuthContext);
 
     return(
+       
         <SafeAreaProvider>
         <View style={{flex:1,backgroundColor:'white'}}>
+           
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
                         <View style={{flexDirection:'row',marginTop:15}}>
                            
-                            <TouchableOpacity onPress={pickImage}>
-                             <Image source={require('../../../assets/profile1.png')}
-                             style={{ width:60,height:60,borderRadius:30 }}   /> 
+                            <TouchableOpacity>
+                           
+                            
+                            <Image source={require('../../../assets/Profile.png')}style={{width:60,height:60,borderRadius:30}}/>
                            </TouchableOpacity>
                              
-                              {image  && <Image source={{uri:image}} style={{width:80,height:80,borderRadius:40}} />}
+                             
 
                        
                     
                             <View style={{flexDirection:'column'}}>
                                 <Title style={styles.title}>Meghana Patan</Title>
-                                <Caption style={styles.Caption}>{userid}</Caption>
+                                <Text style={styles.Caption} >{item}</Text>
+                                <Text>{userid}</Text>
                                 </View>
+                               
+                             
 
              </View>
+            
         </View>
+       
         <Drawer.Section style={styles.drawerSection}>
             <DrawerItem
             icon={({color,size})=>(
@@ -171,6 +200,8 @@ export default function DrawerContent(props){
             </TouchableRipple>
             
         </Drawer.Section>
+
+      
         </View>
         </DrawerContentScrollView>
         
@@ -184,13 +215,16 @@ export default function DrawerContent(props){
               size={size} />
             )}
             label="Sign out"
-            onPress={()=>{signOut()}} />
+            onPress={()=>{Userdata()}} />
         </Drawer.Section>
         </View>
         </SafeAreaProvider>
         
     );
 }
+export default DrawerContent;
+
+
 
 const styles=StyleSheet.create({
     drawerContent:{
@@ -211,6 +245,9 @@ const styles=StyleSheet.create({
     Caption:{
         fontSize:12,
         lineHeight:14,
+       // flex:1,
+        //
+        justifyContent:'space-between'
     },
     row:{
         marginTop:20,

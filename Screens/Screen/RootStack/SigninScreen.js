@@ -8,7 +8,7 @@ import React, { Component } from 'react'
 import firebase from '../../../Apps/firebase'
 import "firebase/auth"
 //import "firebase/Storage"
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-community/async-storage'
 import Maintabscreen from '../../../Screens/Screen/Maintabscreen';
 
 
@@ -19,24 +19,31 @@ class SigninScreen extends Component {
         // this.validate=this.validate.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this)
         this.fnForgotPassword=this.fnForgotPassword.bind(this)
-        AsyncStorage.setItem("login_email","")
+        this.storedata=this.storedata.bind(this)
+        this.Userdata=this.Userdata.bind(this)
+       // AsyncStorage.setItem("login_email","")
        
         this.state = {
             email: '',
             password: '',
             icEye: 'visibility-off',
             showPassword: true,
+            item:'',
+            UserId:'',
+            
+            
             
         }
     }
 
     handleSubmit = () => {
-        AsyncStorage.setItem("login_email","")
+       // AsyncStorage.setItem("login_email","")
         try
         {
             //alert(this.state.Email)
  
-            let strErr = "";   
+            let strErr = "";  
+           
          if(this.state.email=="")
          {
              strErr = strErr + "Please enter Email Address\n";   
@@ -61,15 +68,17 @@ class SigninScreen extends Component {
                 // alert("firebase.auth().currentUser.uid");
                 
                 
-             //AsyncStorage.setItem("g_user_id",firebase.auth().currentUser.uid);
-            // AsyncStorage.setItem("login_email","welcome"+""+this.state.email)
-
-            
-               //history.push("/SubmitData");
-                
+            // AsyncStorage.setItem("g_user_id",firebase.auth().currentUser.uid);
+         //history.push("/SubmitData");
+               this.storedata();
+               this.Userdata();
                 
                 // alert("You are logged in. Please Click on SubmitData to proceed.");
                 alert("you are logged in successfully");
+                
+
+                
+            
 
                // this.setState({userData:firebase.auth().currentUser && firebase.auth().currentUser.email})
                 
@@ -78,6 +87,8 @@ class SigninScreen extends Component {
                 
                   
                   //alert(firebase.auth().currentUser.email);
+
+                 
                 
                   
                
@@ -168,15 +179,30 @@ class SigninScreen extends Component {
         }
 
     }
+    storedata = async () => {
+        try{
+         await  AsyncStorage.setItem("login_email",""+" "+this.state.email);
+         this.setState({
+         item:await AsyncStorage.getItem("login_email")
+         })
+        }catch(error){
+            console.log(error)
+        }
+       }
 
+       Userdata = async () => {
+        try{
+         await AsyncStorage.setItem("g_user_id",firebase.auth().currentUser.uid);
+         this.setState({
+         UserId:await AsyncStorage.getItem("g_user_id")
+         })
+        }catch(error){
+            console.log(error)
+        }
+       }
 
-
-   
-
-
-   
     
-    render() {
+      render() {
         
         return (
             <View style={styles.container}>
@@ -185,6 +211,8 @@ class SigninScreen extends Component {
                     <Text style={styles.text_header}>
                         WELCOME TO DIGICROP AGRICULTURE
                    </Text>
+                   <Text>{this.state.item}</Text>
+                   <Text>{this.state.UserId}</Text>
         
         
                 </View>
@@ -255,6 +283,8 @@ class SigninScreen extends Component {
                                     textAlign:'center'
                                 }]} onPress={()=>{this.props.navigation.navigate('SignupScreen')}}>Sign up</Text>
                             </TouchableOpacity>
+                           
+                          
 
                           
                         </View>

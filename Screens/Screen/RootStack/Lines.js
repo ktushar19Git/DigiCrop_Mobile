@@ -2,7 +2,7 @@ import React from 'react';
 import {View,Text}  from 'react-native';
 import firebase from '../../../Apps/firebase';
 
-import {Line}  from 'react-native-chart-kit';
+import {Line}  from 'react-chartjs-2';
 
 
 
@@ -20,7 +20,7 @@ import {Line}  from 'react-native-chart-kit';
             PlotNo:"1",
             posted_datetime:"11/01/2020 11:02:0025",
             InputData: [],
-            TemperatureArray:[]
+           // TemperatureArray:[]
 
         }
         this.fnFetchData=this.fnFetchData.bind(this);
@@ -41,11 +41,13 @@ import {Line}  from 'react-native-chart-kit';
                  data:TemperatureArray,
                  PointRadius:5,
                  borderWidth:2,
-                // borderColor:'green',
+                borderColor:'green',
                  point:'rgba(200,122,20,1)',
-                // backgroundColor:'transparent',
+                backgroundColor:'transparent',
+
 
                },
+              
 
               
 
@@ -58,9 +60,9 @@ import {Line}  from 'react-native-chart-kit';
                 data:[12,15,18,22,24,10,12,15,18,22],
                 PointRadius:5,
                 borderWidth:2,
-               // borderColor:'blue',
+                borderColor:'blue',
                 point:'rgba(200,122,20,1)',
-               // backgroundColor:'transparent'
+                backgroundColor:'transparent'
             }
 
            

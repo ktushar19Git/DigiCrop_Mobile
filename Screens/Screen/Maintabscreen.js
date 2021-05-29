@@ -13,7 +13,7 @@ import ContactsScreen from '../../Screens/Drawer/ContactsScreen';
 import HomeScreen from '../../Screens/Screen/HomeScreen';
 import ProfileScreen  from '../../Screens/Screen/RootStack/ProfileScreen'
 
-//import Lines from '../../Screens/Screen/RootStack/Lines';
+import Lines from '../../Screens/Screen/RootStack/Lines';
 
 
 
@@ -117,7 +117,8 @@ const HomeStackScreen = ({navigation}) => (
             title:'Overview',
             headerLeft: () => (
                 
-                <Icon.Button name="ios-menu" size={25} backgroundColor='#009387'   />
+                <Icon.Button name="ios-menu" size={25} backgroundColor='#009387' onPress={()=>navigation.openDrawer()} >
+                    </Icon.Button> 
                 
             ),
 
